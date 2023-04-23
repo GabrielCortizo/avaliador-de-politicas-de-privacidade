@@ -1,6 +1,6 @@
 flask
 fitz
-PyMuPDF
+PyMuPDF==1.20
 neattext
 nltk
 spacy
