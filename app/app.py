@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from waitress import serve
 import fitz
 
 from util import get_document_headers
@@ -34,4 +35,5 @@ def post_privacy_policy():
         return render_template('result.html', headers=headers, predictions=predictions)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000)
+    # app.run(debug=True)

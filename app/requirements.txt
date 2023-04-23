@@ -6,3 +6,4 @@ nltk
 spacy
 pt_core_news_lg @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_lg-3.4.0/pt_core_news_lg-3.4.0-py3-none-any.whl
 scikit-learn
+waitress
