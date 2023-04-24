@@ -7,8 +7,7 @@ import unicodedata
 import neattext as nt
 import nltk
 import spacy
-
-
+import pdfplumber
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -197,6 +196,23 @@ def get_document_headers(doc) -> List[str]:
 
     return title_elements
 
+
+def get_headers_2(doc):
+    with pdfplumber.open(doc) as pdf: 
+        headers = []
+        for page in pdf.pages:
+            clean_text = page.filter(lambda obj: obj["object_type"] == "char" and "Bold" in obj["fontname"])
+            clean_text = clean_text.extract_text().split('\n')
+            clean_text = list(filter(lambda title: title != "" and (title[0].isdigit() or title[0].isupper()), clean_text))
+            headers += clean_text
+
+    headers_starting_with_digits = 0
+    for header in headers:
+        if header[0].isdigit():
+            headers_starting_with_digits += 1
+    if headers_starting_with_digits >= 5:
+        headers = list(filter(lambda header: header[0].isdigit(), headers))
+    return headers
 
 def write_csv(file_name, rows):
     with open(file_name, 'a', newline='') as file:

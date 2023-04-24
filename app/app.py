@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from waitress import serve
 import fitz
 
-from util import get_document_headers
+from util import get_document_headers, get_headers_2
 from predict import predict
 
 app = Flask(__name__)
@@ -26,9 +26,14 @@ def get_privacy_policy():
 @app.route('/privacy-policy', methods = ['POST'])
 def post_privacy_policy():
         f = request.files['file']
-        doc = fitz.open(stream=f.read(), filetype="pdf")
 
-        headers = list(filter(lambda x: len(x) < 80, get_document_headers(doc)))
+        F = open("file.pdf", "wb")
+        F.write(f.read())
+        doc = fitz.open("file.pdf")
+
+        headers = get_document_headers(doc) + get_headers_2("file.pdf")
+        headers = list(filter(lambda x: len(x) < 90 and len(x) > 4, headers))
+        headers = list(set(headers))
 
         predictions = predict(headers)
 
