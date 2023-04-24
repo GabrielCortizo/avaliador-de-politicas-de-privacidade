@@ -4,21 +4,21 @@ import pickle
 
 
 CRITERIAS = {
-    1:"A política específica claramente quais dados são coletados?", 
-    2:"A Política de Privacidade específica claramente como a empresa pode usar os dados coletados?",
-    3:"A política trata questões relacionadas à privacidade de crianças?",
-    4:"A Política de Privacidade claramente especifica se as informações podem ser compartilhadas ou vendidas para terceiros?",
-    5:"A Política de Privacidade fala sobre como ela utiliza cookie no seu site?",
+    1:"A política específica claramente quais dados são coletados?",
+    2: "A Política de Privacidade específica claramente como a empresa pode usar os dados coletados?",
+    3: "A política trata questões relacionadas à privacidade de crianças?",
+    4: "A Política específica claramente como os dados são coletados?",
+    5: "A Política de Privacidade claramente especifica se as informações podem ser compartilhadas ou vendidas para terceiros?",
     6: "Decisões Automatizadas",
-    7: "A política explica claramente o que acontece com os dados do usuário caso ele exclua a conta?",
-    8:"A Política de Privacidade claramente informa dados para contato com a empresa?",
-    9:"A Política de Privacidade claramente específica como os dados são armazenados?",
-    10:"Dados do usuário em nível internacional",
-    11: "Como as alterações nas políticas são tratadas",
-    12:"A Política específica claramente como os dados são coletados?", 
-    13: "A Política de Privacidade claramente especifica os direitos do usuário?"
+    7: "A Política de Privacidade claramente especifica quais são as medidas adotadas pela aplicação para garantir a confidencialidade, a integridade e a qualidade dos dados?",
+    8: "A política explica claramente o que acontece com os dados do usuário caso ele exclua a conta?",
+    9: "A Política de Privacidade claramente especifica os direitos do usuário?",
+    10: "A Política de Privacidade fala sobre como ela utiliza cookie no seu site?",
+    11: "A Política de Privacidade claramente informa dados para contato com a empresa?",
+    12: "A Política de Privacidade claramente específica como os dados são armazenados?",
+    13: "A Política de Privacidade fala sobre transferir dados do usuário em nível internacional?",
+    14: "Como as alterações nas políticas são tratadas?"
 }
-
 
 model = pickle.load(open('model.sav', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
