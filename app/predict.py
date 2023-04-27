@@ -29,10 +29,10 @@ INFO_NOT_FOUND = "Critério nāo encontrado"
 def predict(headers: List[str])-> Dict:
     clean_headers = list(map(clean_text , headers))
 
-    vectorized_headers = vectorizer.transform(clean_headers)
-    prediction = model.predict(vectorized_headers)
-
-    print(clean_headers)
+    prediction = []
+    if len(clean_headers) > 0:
+        vectorized_headers = vectorizer.transform(clean_headers)
+        prediction = model.predict(vectorized_headers)
     print(prediction)
 
     agg_predictions = {}

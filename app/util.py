@@ -194,7 +194,10 @@ def get_document_headers(doc) -> List[str]:
     title_elements = filter(lambda el: el.startswith('<h') or el.startswith('<s'), elements)
     title_elements = [ remove_tags(el) for el in title_elements]
 
-    return title_elements
+
+
+    headers =  list(filter(lambda title:  title[0].isdigit() or title[0].isupper(), title_elements))
+    return headers
 
 
 def get_headers_2(doc):

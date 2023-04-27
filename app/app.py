@@ -5,6 +5,31 @@ import fitz
 from util import get_document_headers, get_headers_2
 from predict import predict
 
+
+def is_filter_number(headers):
+    headers_starting_with_digits = 0
+    for header in headers:
+        if len(header) >= 5 and header[0].isdigit():
+            headers_starting_with_digits += 1
+    return headers_starting_with_digits >= 5
+
+def filter_numbers(headers):
+    if is_filter_number(headers): 
+        return list(filter(lambda header: header[0].isdigit(), headers))
+    return headers
+
+def is_filter_od_list(headers):
+    headers_starting_with_digits = 0
+    for header in headers:
+        if len(header) >= 5 and header[1] == '.':
+            headers_starting_with_digits += 1
+    return headers_starting_with_digits >= 5
+
+def filter_ordered_list_letters(headers):
+    if is_filter_od_list(headers):
+        return list(filter(lambda header: len(header) >= 2 and header[1] == '.', headers))
+    return headers
+
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
@@ -31,8 +56,17 @@ def post_privacy_policy():
         F.write(f.read())
         doc = fitz.open("file.pdf")
 
-        headers = get_document_headers(doc) + get_headers_2("file.pdf")
+        headers = filter_numbers(get_document_headers(doc))
+        headers_bold = filter_ordered_list_letters(get_headers_2("file.pdf"))
+        print(headers_bold)
+
+        if is_filter_number(headers_bold) or is_filter_od_list(headers_bold):
+            headers = headers_bold
+        elif len(headers) <=8 :
+            headers += headers_bold
+
         headers = list(filter(lambda x: len(x) < 90 and len(x) > 4, headers))
+
         headers = list(set(headers))
 
         predictions = predict(headers)
